@@ -1,6 +1,15 @@
 import type { NextConfig } from "next";
 import { withSentryConfig } from "@sentry/nextjs";
 
+// Proxy /api/* to the Hono API on its own domain so the Better Auth session
+// cookie is first-party on this frontend's domain (see apps/user/next.config.js
+// for the full rationale). Without this the cookie is cross-site and the
+// server-side getSession() can't read it, so the post-login redirect bounces.
+const API_ORIGIN =
+  process.env.API_PROXY_TARGET ||
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://localhost:4000";
+
 // Define the base Next.js configuration
 const baseConfig: NextConfig = {
   output: process.env.BUILD_STANDALONE === "true" ? "standalone" : undefined,
@@ -15,6 +24,14 @@ const baseConfig: NextConfig = {
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: `${API_ORIGIN}/api/:path*`,
+      },
+    ];
   },
 };
 
