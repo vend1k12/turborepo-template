@@ -1,0 +1,107 @@
+services:
+  caddy:
+    image: caddy:2.7-alpine
+    container_name: vend1k-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+      - docs
+      - admin
+      - user
+      - api
+
+  web:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.web
+    container_name: vend1k-web
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+    expose:
+      - "3000"
+
+  docs:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.docs
+    container_name: vend1k-docs
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+    expose:
+      - "3001"
+
+  user:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.user
+    container_name: vend1k-user
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      PORT: 3002
+    expose:
+      - "3002"
+
+  admin:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.admin
+    container_name: vend1k-admin
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      PORT: 3003
+    expose:
+      - "3003"
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    container_name: vend1k-api
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/vend1k
+      BETTER_AUTH_URL: http://api.vend1k.local
+      NEXT_PUBLIC_BETTER_AUTH_URL: http://api.vend1k.local
+      NEXT_PUBLIC_API_URL: http://api.vend1k.local
+    expose:
+      - "4000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16-alpine
+    container_name: vend1k-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: vend1k
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  caddy_data:
+  caddy_config:
+  postgres_data:

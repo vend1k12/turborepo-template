@@ -1,0 +1,31 @@
+---
+title: Workspace Architecture
+description: How the Turborepo monorepo is structured and why.
+---
+
+The **vend1k** personal starter uses a Turborepo-powered monorepo architecture designed to scale with clean boundaries and type safety.
+
+## Folder Structure
+
+```text
+.
+├── apps/
+│   ├── web/       # Public landing page (port 3000)
+│   ├── docs/      # Technical documentation (port 3001)
+│   ├── user/      # User management portal (port 3002)
+│   ├── admin/     # Admin console panel (port 3003)
+│   └── api/       # Hono-based backend API (port 4000)
+└── packages/
+    ├── ui/         # Shared core components
+    ├── auth/       # Better Auth credential engine
+    ├── db/         # Postgres + Drizzle ORM schemas
+    ├── api-client/ # Shared, typed Hono RPC client + hooks
+    ├── eslint-config/
+    └── typescript-config/
+```
+
+## Core Benefits
+
+- **Unified build cache:** Turborepo caches builds, typechecks, and tests to speed up local and CI pipelines.
+- **Strict type safety:** Database models and Hono API types flow seamlessly to all Next.js frontends via shared packages.
+- **Isolated environments:** Frontends run on dedicated ports, mapped inside a Docker Compose setup with reverse-proxy routing.

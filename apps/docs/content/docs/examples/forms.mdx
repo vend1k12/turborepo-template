@@ -1,0 +1,27 @@
+---
+title: Forms with TanStack Form
+description: Type-safe forms validated with Zod.
+---
+
+A type-safe form handler built using `@tanstack/react-form`. It provides inline input feedback and validates fields with Zod.
+
+## Sample validator
+
+```ts
+import { useForm } from "@tanstack/react-form";
+import { z } from "zod";
+
+const schema = z.object({
+  email: z.string().email(),
+});
+
+const form = useForm({
+  defaultValues: { email: "" },
+  validators: { onChange: schema },
+  onSubmit: async ({ value }) => {
+    // submit value
+  },
+});
+```
+
+Because the schema drives both validation and inferred types, the form values and submit handler stay in sync with no manual typings.

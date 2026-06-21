@@ -1,0 +1,30 @@
+{
+  "name": "@vend1k/api-client",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": "./src/client.ts",
+    "./hooks": "./src/hooks/index.ts",
+    "./keys": "./src/query-keys.ts",
+    "./types": "./src/types.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@vend1k/typescript-config": "*",
+    "typescript": "5.9.2",
+    "@types/node": "^22.15.3",
+    "@types/react": "19.2.2"
+  },
+  "dependencies": {
+    "@vend1k/api": "workspace:*",
+    "@vend1k/auth": "workspace:*",
+    "@vend1k/shared": "workspace:*",
+    "@tanstack/react-query": "^5.95.2",
+    "hono": "^4.6.0",
+    "react": "^19.2.0"
+  }
+}

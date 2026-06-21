@@ -1,0 +1,33 @@
+---
+title: Chat Walkthrough
+description: Real-time messaging over SSE / WebSockets.
+---
+
+The Chat example showcases real-time messaging using Server-Sent Events (SSE) or WebSockets managed by Hono and rendered in Next.js.
+
+## Implementation steps
+
+<Steps>
+<Step>
+### Establish a stream endpoint
+
+Expose an event streaming endpoint on the API at `/api/chat/stream`.
+</Step>
+
+<Step>
+### Connect from the client
+
+On the client, initiate an `EventSource` connection to that endpoint.
+</Step>
+
+<Step>
+### Post messages
+
+Post messages using standard fetch requests that dispatch events into the API queue, which then fan out to connected listeners.
+</Step>
+</Steps>
+
+<Callout type="info">
+  SSE is the simplest option for one-directional server-to-client updates.
+  Reach for WebSockets only when you need bidirectional, low-latency messaging.
+</Callout>

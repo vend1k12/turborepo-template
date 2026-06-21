@@ -1,0 +1,16 @@
+---
+title: UI Core Components
+description: The shared @vend1k/ui design system and theming.
+---
+
+The monorepo uses [Tailwind CSS v4](https://tailwindcss.com) for styling. Global styles, color palettes, and fonts are inherited from custom CSS layers.
+
+## Design system
+
+Core components live under `packages/ui`. This is a private dependency referenced across all apps. Components are styled in OKLCH colors matching the Claude warm editorial look: cream backgrounds, soft brown foregrounds, and rust-colored primary actions.
+
+## Theming
+
+Themes are defined as `[data-theme]` blocks that expose CSS custom properties (for example `--background`, `--primary`, `--border`). Dark mode toggles a `.dark` class via `next-themes`, and a shared `ThemeModeToggle` flips between light and dark with a view-transition wave animation.
+
+These very docs reuse that system — the Fumadocs UI inherits the same OKLCH palette by mapping its color tokens onto the shared theme variables.

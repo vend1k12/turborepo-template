@@ -1,0 +1,38 @@
+{
+  "name": "@vend1k/docs",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "predev": "fumadocs-mdx",
+    "dev": "bun --env-file=../../.env next dev --port 3001",
+    "prebuild": "fumadocs-mdx",
+    "build": "bun --env-file=../../.env next build",
+    "start": "bun --env-file=../../.env next start",
+    "lint": "eslint --max-warnings 0",
+    "postinstall": "fumadocs-mdx",
+    "check-types": "fumadocs-mdx && next typegen && tsc --noEmit"
+  },
+  "dependencies": {
+    "@vend1k/ui": "*",
+    "fumadocs-core": "16.10.5",
+    "fumadocs-mdx": "15.0.12",
+    "fumadocs-ui": "16.10.5",
+    "next": "16.2.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@vend1k/eslint-config": "*",
+    "@vend1k/typescript-config": "*",
+    "@types/node": "^22.15.3",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "@types/mdx": "^2.0.13",
+    "eslint": "^9.39.1",
+    "typescript": "5.9.2",
+    "tailwindcss": "^4.2.2",
+    "@tailwindcss/postcss": "^4.2.2",
+    "postcss": "8.5.14"
+  }
+}

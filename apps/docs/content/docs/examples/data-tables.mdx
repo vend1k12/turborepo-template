@@ -1,0 +1,13 @@
+---
+title: Data Tables with Pagination
+description: Server-paginated, filterable tables with URL state.
+---
+
+Advanced data table displays leveraging `@tanstack/react-table`. Supports server-side search, filtering, and page offsets.
+
+## Key features
+
+- **URL-based state:** query params are synced (for example `?page=2&search=joe`) so tables remain shareable and survive refreshes.
+- **Skeletons:** smooth placeholder structures render during loading transitions.
+
+The shared `@vend1k/ui` data-table primitives bundle the column headers, faceted filters, pagination, and view options so each app wires up a table with minimal boilerplate.

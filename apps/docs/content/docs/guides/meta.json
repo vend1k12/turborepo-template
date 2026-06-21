@@ -1,0 +1,12 @@
+{
+  "title": "Guides",
+  "pages": [
+    "architecture",
+    "api",
+    "auth",
+    "ui",
+    "user",
+    "admin",
+    "deployment"
+  ]
+}

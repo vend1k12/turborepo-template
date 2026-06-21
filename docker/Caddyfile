@@ -1,0 +1,24 @@
+{
+    email admin@vend1k.local
+    local_certs
+}
+
+http://web.vend1k.local:80, http://localhost:80 {
+    reverse_proxy web:3000
+}
+
+http://docs.vend1k.local:80 {
+    reverse_proxy docs:3001
+}
+
+http://app.vend1k.local:80, http://user.vend1k.local:80 {
+    reverse_proxy user:3002
+}
+
+http://admin.vend1k.local:80 {
+    reverse_proxy admin:3003
+}
+
+http://api.vend1k.local:80 {
+    reverse_proxy api:4000
+}

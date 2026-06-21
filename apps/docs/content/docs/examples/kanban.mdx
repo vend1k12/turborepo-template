@@ -1,0 +1,10 @@
+---
+title: Kanban Board Example
+description: Drag-and-drop workflow board with optimistic updates.
+---
+
+A drag-and-drop workflow board designed using `@dnd-kit/core`. Tasks are partitioned into states like TODO, In Progress, and Done.
+
+## Data sync
+
+Drags fire optimistic updates on the frontend, then trigger debounced database mutations to guarantee a snappy response without losing server sync. If a mutation fails, the optimistic state rolls back to the last confirmed server value.

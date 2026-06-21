@@ -1,0 +1,24 @@
+---
+title: Better Auth Security
+description: Credential-based email/password auth with Postgres sessions.
+---
+
+Authentication in this template is handled by [Better Auth](https://www.better-auth.com). It uses credential-based email/password login with session state stored in a PostgreSQL database.
+
+## Configuration
+
+The database session schemas are mapped under `packages/db/src/schema.ts` and are managed by the core package `packages/auth`. The client is exported from `@vend1k/auth/client` and uses the base URL of the central API.
+
+## Auth flow example
+
+```ts
+import { authClient } from "@vend1k/auth/client";
+
+// Sign in with email and password
+const { data, error } = await authClient.signIn.email({
+  email: "user@example.com",
+  password: "securepassword",
+});
+```
+
+Sessions are validated against the API, so every frontend shares the same source of truth for authentication state.

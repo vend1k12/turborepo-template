@@ -1,0 +1,86 @@
+/* Single CSS entry for the docs app.
+   @vend1k/ui/globals.css is the ONE `@import 'tailwindcss'` (it also brings the
+   claude theme, base layer body/border rules, and the ::view-transition wave
+   keyframes used by ThemeModeToggle). The Fumadocs CSS files below do NOT import
+   tailwind themselves, so there is no double-import. */
+@import "@vend1k/ui/globals.css";
+
+/* Fumadocs UI: neutral.css registers the --color-fd-* tokens (via @theme) and
+   sets light/dark defaults; preset.css adds the typography plugin + layout layers. */
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+
+/* Generate the Fumadocs utility classes used inside its prebuilt components.
+   Relative to this file: apps/docs/src/app -> apps/docs/node_modules. */
+@source "../../node_modules/fumadocs-ui/dist/**/*.js";
+
+/* ---------------------------------------------------------------------------
+   Map Fumadocs' --color-fd-* tokens onto the claude OKLCH palette so the docs
+   inherit the warm editorial design system in both light and dark modes.
+
+   Scoped to [data-theme='claude'] (mirrors packages/ui claude.css) and kept
+   UNLAYERED + LAST so it wins over neutral.css/preset.css. The `.dark` variant
+   has specificity (0,2,0), beating Fumadocs' `.dark` (0,1,0) regardless of order.
+   --------------------------------------------------------------------------- */
+[data-theme="claude"] {
+  --color-fd-background: var(--background);
+  --color-fd-foreground: var(--foreground);
+  --color-fd-muted: var(--muted);
+  --color-fd-muted-foreground: var(--muted-foreground);
+  --color-fd-popover: var(--popover);
+  --color-fd-popover-foreground: var(--popover-foreground);
+  /* Light claude has background == card; give cards/code a slightly distinct
+     surface (secondary) so code blocks and the search dialog read as elevated. */
+  --color-fd-card: var(--secondary);
+  --color-fd-card-foreground: var(--card-foreground);
+  --color-fd-border: var(--border);
+  --color-fd-primary: var(--primary);
+  --color-fd-primary-foreground: var(--primary-foreground);
+  --color-fd-secondary: var(--secondary);
+  --color-fd-secondary-foreground: var(--secondary-foreground);
+  --color-fd-accent: var(--accent);
+  --color-fd-accent-foreground: var(--accent-foreground);
+  --color-fd-ring: var(--ring);
+}
+
+[data-theme="claude"].dark {
+  --color-fd-background: var(--background);
+  --color-fd-foreground: var(--foreground);
+  --color-fd-muted: var(--muted);
+  --color-fd-muted-foreground: var(--muted-foreground);
+  --color-fd-popover: var(--popover);
+  --color-fd-popover-foreground: var(--popover-foreground);
+  /* In dark claude, popover is a touch lighter than background — use it for the
+     elevated card/code surface. */
+  --color-fd-card: var(--popover);
+  --color-fd-card-foreground: var(--foreground);
+  --color-fd-border: var(--border);
+  --color-fd-primary: var(--primary);
+  --color-fd-primary-foreground: var(--primary-foreground);
+  /* claude's dark --secondary/--card-foreground are INVERTED (light) per the
+     shadcn convention. Fumadocs uses --color-fd-secondary as an elevated surface
+     (search input, code-block header), so map it to a real dark surface instead
+     of the light --secondary, and use --foreground for its text. */
+  --color-fd-secondary: var(--muted);
+  --color-fd-secondary-foreground: var(--foreground);
+  --color-fd-accent: var(--muted);
+  --color-fd-accent-foreground: var(--foreground);
+  --color-fd-ring: var(--ring);
+}
+
+/* neutral.css ships `.dark #nd-sidebar { --color-fd-muted/secondary/... }`
+   (specificity 1,1,0) which would re-introduce neutral grays in the dark sidebar.
+   Re-assert the claude dark surfaces at matching specificity. */
+[data-theme="claude"].dark #nd-sidebar {
+  --color-fd-muted: var(--muted);
+  --color-fd-secondary: var(--muted);
+  --color-fd-muted-foreground: var(--muted-foreground);
+}
+
+/* Code blocks: anchor the Shiki surface to the claude card token defined above
+   and give a clear outline so blocks read as cards in both modes. */
+[data-theme="claude"] #nd-docs-layout pre,
+[data-theme="claude"] .prose pre {
+  background-color: var(--color-fd-card);
+  border: 1px solid var(--color-fd-border);
+}

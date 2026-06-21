@@ -1,0 +1,22 @@
+---
+title: Hono Backend API
+description: The single source of truth for data, auth, and business logic.
+---
+
+The API is a lightweight [Hono](https://hono.dev) server running under `apps/api`. It acts as the single source of truth for database transactions, authentication requests, and business logic.
+
+## End-to-end types
+
+Frontends do not make un-typed raw fetch requests. They use `@vend1k/api-client`, which exports fully typed client helpers that mirror Hono routes. If you change a route signature on the API, the Next.js apps will fail compilation until the client call is updated.
+
+## Sample route definition
+
+```ts
+import { Hono } from "hono";
+
+const app = new Hono().get("/health", (c) => c.json({ status: "healthy" }));
+
+export type AppType = typeof app;
+```
+
+The exported `AppType` is what powers the typed client in `@vend1k/api-client` — the same type is consumed on the frontend to keep requests and responses in sync.

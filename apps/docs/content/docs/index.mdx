@@ -1,0 +1,30 @@
+---
+title: Introduction
+description: Architecture, API, auth, deployment, and example documentation for the vend1k personal starter.
+---
+
+The **vend1k personal** starter is a Turborepo-powered monorepo combining a [Hono](https://hono.dev) backend API with multiple [Next.js](https://nextjs.org) frontends, wired together with end-to-end type safety, a shared design system, and credential-based authentication.
+
+These docs cover how the workspace is organized, how the pieces fit together, and how to extend them.
+
+## Guides
+
+<Cards>
+  <Card href="/docs/guides/architecture" title="Workspace Architecture" description="How the Turborepo monorepo is structured and why." />
+  <Card href="/docs/guides/api" title="Hono Backend API" description="The single source of truth for data, auth, and business logic." />
+  <Card href="/docs/guides/auth" title="Better Auth Security" description="Credential-based email/password auth with Postgres sessions." />
+  <Card href="/docs/guides/ui" title="UI Core Components" description="The shared @vend1k/ui design system and theming." />
+  <Card href="/docs/guides/user" title="User Management Portal" description="The standalone customer-facing portal app." />
+  <Card href="/docs/guides/admin" title="Admin Panel Console" description="The internal administration console." />
+  <Card href="/docs/guides/deployment" title="Deployment & Orchestration" description="Containerized builds and reverse-proxy routing." />
+</Cards>
+
+## Examples
+
+<Cards>
+  <Card href="/docs/examples/chat" title="Chat Walkthrough" description="Real-time messaging over SSE / WebSockets." />
+  <Card href="/docs/examples/kanban" title="Kanban Board" description="Drag-and-drop workflow board with optimistic updates." />
+  <Card href="/docs/examples/notifications" title="Notifications Center" description="Toasts and a persistent notification drawer." />
+  <Card href="/docs/examples/forms" title="Forms with TanStack Form" description="Type-safe forms validated with Zod." />
+  <Card href="/docs/examples/data-tables" title="Data Tables" description="Server-paginated, filterable tables with URL state." />
+</Cards>

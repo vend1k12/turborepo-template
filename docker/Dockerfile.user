@@ -1,0 +1,28 @@
+FROM bun:1.3.14-slim AS dependencies
+WORKDIR /app
+COPY package.json bun.lock ./
+COPY apps/user/package.json ./apps/user/package.json
+COPY packages/ui/package.json ./packages/ui/package.json
+COPY packages/auth/package.json ./packages/auth/package.json
+COPY packages/eslint-config/package.json ./packages/eslint-config/package.json
+COPY packages/typescript-config/package.json ./packages/typescript-config/package.json
+RUN bun install --frozen-lockfile
+
+FROM bun:1.3.14-slim AS builder
+WORKDIR /app
+COPY --from=dependencies /app/node_modules ./node_modules
+COPY . .
+ENV NODE_ENV=production
+ENV BUILD_STANDALONE=true
+RUN bun x turbo run build --filter=@vend1k/user...
+
+FROM bun:1.3.14-slim AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+ENV PORT=3002
+ENV HOSTNAME="0.0.0.0"
+COPY --from=builder /app/apps/user/public ./apps/user/public
+COPY --from=builder /app/apps/user/.next/standalone ./
+COPY --from=builder /app/apps/user/.next/static ./apps/user/.next/static
+EXPOSE 3002
+CMD ["bun", "run", "apps/user/server.js"]

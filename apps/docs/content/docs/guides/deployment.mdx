@@ -1,0 +1,20 @@
+---
+title: Deployment & Orchestration
+description: Containerized builds and reverse-proxy routing.
+---
+
+Production releases are fully containerized using multi-stage Docker builds compiled with [Bun](https://bun.sh) for fast execution.
+
+## Reverse-proxy routing
+
+A Caddy or Traefik reverse proxy handles traffic, routing requests dynamically to target containers depending on host subdomains — for example `api.vend1k.local` to the Hono API, and `app.vend1k.local` to the User app.
+
+## Building standalone
+
+Setting the `BUILD_STANDALONE=true` environment variable tells Next.js to package only the necessary dependencies, yielding small container footprints suitable for AWS or general server hosting.
+
+```bash
+BUILD_STANDALONE=true bun run build
+```
+
+Each app reads shared configuration from the root `.env` file at build time, so cross-app URLs and secrets stay centralized.
