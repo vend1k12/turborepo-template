@@ -10,12 +10,10 @@ export default defineConfig({
   platform: "node",
   target: "node22",
   // Inline everything except Node builtins (node:*).
-  noExternal: [/^(?!node:)/],
+  deps: { alwaysBundle: [/^(?!node:)/] },
   dts: false,
   clean: true,
-  // Emit a single self-contained file (no shared chunks) so Vercel routes one
-  // api/index.js function with nothing to resolve at runtime.
-  unbundle: false,
+  // Emit a single self-contained file (no shared chunks).
   outputOptions: {
     entryFileNames: "index.js",
     inlineDynamicImports: true,
