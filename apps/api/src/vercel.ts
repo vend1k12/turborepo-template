@@ -1,9 +1,12 @@
-import { handle } from "hono/vercel";
 import { app } from "./app.js";
 
 // Vercel serverless entry. tsdown bundles this (and all workspace deps) into a
-// single self-contained api/index.js, because Vercel runs source directly and
-// Node cannot import the workspace packages' raw .ts files. See tsdown.config.ts.
-export const config = { runtime: "nodejs" };
+// single self-contained file (see scripts/vercel-build.mjs), which is deployed
+// as a Node function via the Build Output API.
+//
+// Hono is Web-standard: app.fetch is a (Request) => Response handler. Vercel's
+// Node runtime accepts a Web `fetch` export, so we expose it directly rather
+// than the (req, res) Node signature.
+export const fetch = app.fetch;
 
-export default handle(app);
+export default app.fetch;
