@@ -10,6 +10,7 @@
 // our own origin would create an infinite rewrite loop. The proxy target must
 // be the API's real domain.
 const API_ORIGIN = process.env.API_PROXY_TARGET || "http://localhost:4000";
+console.log("[next.config] API_PROXY_TARGET=", JSON.stringify(process.env.API_PROXY_TARGET), "API_ORIGIN=", API_ORIGIN);
 
 const nextConfig = {
   output: process.env.BUILD_STANDALONE === "true" ? "standalone" : undefined,
