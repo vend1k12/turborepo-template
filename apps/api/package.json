@@ -22,6 +22,7 @@
     "vitest": "^3.0.0"
   },
   "dependencies": {
+    "@hono/node-server": "^2.0.5",
     "@vend1k/auth": "workspace:*",
     "@vend1k/db": "workspace:*",
     "@vend1k/shared": "workspace:*",
